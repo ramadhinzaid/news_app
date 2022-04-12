@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
-import 'pages/splash_screen.dart';
+import 'package:get/get.dart';
+import 'package:news_app/routes/app_routes.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,12 +11,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const SplashScreen(),
+      // home: const SplashScreen(),
+      getPages: AppRoutes.pages,
     );
   }
 }
