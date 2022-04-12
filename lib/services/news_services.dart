@@ -9,10 +9,11 @@ import 'package:news_app/utils/constant_value.dart';
 import "package:http/http.dart" as http;
 
 class NewsServices {
-  static Future<List<ArticleModel>?> getTopHeadlinesNews(String url) async {
+  static Future<List<ArticleModel>> getTopHeadlinesNews(String url) async {
     try {
       Response response = await http
-          .get(API.apiMobileUser("top-headlines?$url"))
+          .get(API.apiMobileUser("top-headlines?$url"),
+              headers: API.headerValue)
           .timeout(const Duration(seconds: 10));
       var data = jsonDecode(response.body);
       if (response.statusCode == 200 &&

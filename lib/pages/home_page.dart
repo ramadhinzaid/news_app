@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:news_app/components/card_international_article.dart';
+import 'package:news_app/controllers/news_controller.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+  HomePage({Key? key}) : super(key: key);
+
+  final NewsController newsController = Get.put(NewsController());
 
   @override
   Widget build(BuildContext context) {
@@ -57,70 +62,37 @@ class HomePage extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Expanded(
-                      child: ListView.separated(
-                          separatorBuilder: (context, index) => const Padding(
-                                padding: EdgeInsets.only(right: 8.0),
-                              ),
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          scrollDirection: Axis.horizontal,
-                          itemCount: 30,
-                          itemBuilder: (ct, id) => Card(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15)),
-                                child: Stack(
-                                  children: [
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(15),
-                                      child: SizedBox(
-                                        width: 150,
-                                        height: double.infinity,
-                                        child: Image.network(
-                                          "https://a57.foxnews.com/static.foxbusiness.com/foxbusiness.com/content/uploads/2022/04/0/0/1stock-4-12-22.jpg?ve=1&tl=1",
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                    ),
-                                    Align(
-                                      alignment: Alignment.bottomCenter,
-                                      child: Container(
-                                        width: 150,
-                                        decoration: BoxDecoration(
-                                            color:
-                                                Colors.black.withOpacity(0.3),
-                                            borderRadius:
-                                                const BorderRadius.only(
-                                                    bottomLeft:
-                                                        Radius.circular(16),
-                                                    bottomRight:
-                                                        Radius.circular(16))),
-                                        padding: const EdgeInsets.all(8),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Text(
-                                              "US stocks whipsawing, investors anxious over new China COVID-19 outbreak, Fed rate hikes - Fox Business",
-                                              style: textTheme.subtitle1
-                                                  ?.copyWith(
-                                                      color: Colors.white),
-                                              maxLines: 3,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                            Text(
-                                              "data2",
-                                              style: textTheme.overline
-                                                  ?.copyWith(
-                                                      color: Colors.white),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ))),
+                  Expanded(child: GetBuilder<NewsController>(builder: (news) {
+                    if (news.isLoadingInternationalArticle) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else if (news.errorMessageInternationalArticle != null) {
+                      return Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Center(
+                          child: Text(
+                            news.errorMessageInternationalArticle ?? "",
+                            style: textTheme.bodyText2,
+                            textAlign: TextAlign.center,
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      );
+                    }
+
+                    return ListView.separated(
+                        physics: const BouncingScrollPhysics(),
+                        separatorBuilder: (context, index) => const Padding(
+                              padding: EdgeInsets.only(right: 8.0),
+                            ),
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        scrollDirection: Axis.horizontal,
+                        itemCount: 10,
+                        itemBuilder: (ctx, id) => CardInternationalArticle(
+                            article: news.listInternationalArticle[id]));
+                  })),
                 ],
               ),
             ),
