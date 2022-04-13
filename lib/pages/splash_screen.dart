@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:news_app/controllers/news_controller.dart';
 import 'package:news_app/routes/route_name.dart';
 
 class SplashScreen extends StatelessWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+  SplashScreen({Key? key}) : super(key: key);
+  final NewsController newsController = Get.put(NewsController());
 
   @override
   Widget build(BuildContext context) {

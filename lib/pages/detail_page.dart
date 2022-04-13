@@ -66,7 +66,7 @@ class _DetailPageState extends State<DetailPage> {
             onWebViewCreated: (cont) {
               _controller.complete(cont);
             },
-            onPageFinished: (url) {
+            onPageStarted: (url) {
               setState(() {
                 isLoading = false;
               });

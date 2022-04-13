@@ -6,8 +6,8 @@ import 'package:news_app/routes/route_name.dart';
 
 class AppRoutes {
   static final pages = [
-    GetPage(name: RouteName.splashScreen, page: () => const SplashScreen()),
+    GetPage(name: RouteName.splashScreen, page: () => SplashScreen()),
     GetPage(name: RouteName.homePage, page: () => HomePage()),
-    GetPage(name: RouteName.detailPage, page: () => DetailPage())
+    GetPage(name: RouteName.detailPage, page: () => const DetailPage())
   ];
 }
