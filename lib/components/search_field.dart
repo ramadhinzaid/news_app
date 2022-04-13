@@ -40,12 +40,16 @@ class _SearchFieldState extends State<SearchField> {
       textInputAction: TextInputAction.search,
       cursorColor: Colors.grey,
       decoration: InputDecoration(
-        suffixIcon: IconButton(
-            onPressed: () => searchQuery.clear(),
-            icon: const Icon(
-              Icons.close,
-              color: Colors.grey,
-            )),
+        contentPadding: const EdgeInsets.only(left: 16, right: 16),
+        hintText: "Search Here...",
+        suffixIcon: searchQuery.text.isEmpty
+            ? null
+            : IconButton(
+                onPressed: () => searchQuery.clear(),
+                icon: const Icon(
+                  Icons.close,
+                  color: Colors.grey,
+                )),
         border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
             borderSide: const BorderSide(

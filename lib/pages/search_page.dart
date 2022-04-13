@@ -16,11 +16,11 @@ class SearchPage extends StatelessWidget {
         appBar: AppBar(
           elevation: 0,
           backgroundColor: theme.scaffoldBackgroundColor,
-          title: Container(
-            height: 70,
-            padding:
-                const EdgeInsets.only(left: 8, top: 16, right: 8, bottom: 8),
-            child: const Center(
+          title: const SizedBox(
+            height: 50,
+            // padding:
+            //     const EdgeInsets.only(left: 8, top: 16, right: 8, bottom: 8),
+            child: Center(
               child: SearchField(),
             ),
           ),
