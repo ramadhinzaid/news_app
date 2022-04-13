@@ -76,7 +76,7 @@ class NewsController extends GetxController {
     }
   }
 
-  void resetSearchValue() {
+  void resetSearchValue() async {
     listSearchArticle = [];
     update();
   }

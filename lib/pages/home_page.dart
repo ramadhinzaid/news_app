@@ -27,11 +27,18 @@ class HomePage extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () => showGeneralDialog(
-                context: context,
-                pageBuilder: (ctx, animation, secondAnimation) {
-                  return SearchPage();
-                }),
+            onPressed: () {
+              newsController.resetSearchValue();
+              showGeneralDialog(
+                  context: context,
+                  transitionDuration: const Duration(milliseconds: 300),
+                  pageBuilder: (ctx, animation, secondAnimation) {
+                    return FadeTransition(
+                      opacity: animation,
+                      child: SearchPage(),
+                    );
+                  });
+            },
             icon: Icon(
               Icons.search_rounded,
               color: theme.indicatorColor,
@@ -53,19 +60,9 @@ class HomePage extends StatelessWidget {
                   Padding(
                     padding:
                         const EdgeInsets.only(left: 16.0, bottom: 8, right: 16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "International",
-                          style: textTheme.headline6,
-                        ),
-                        Text(
-                          "See All",
-                          style:
-                              textTheme.subtitle2?.copyWith(color: Colors.grey),
-                        ),
-                      ],
+                    child: Text(
+                      "International",
+                      style: textTheme.headline6,
                     ),
                   ),
                   Expanded(child: GetBuilder<NewsController>(builder: (news) {
