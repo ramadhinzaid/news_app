@@ -16,10 +16,13 @@ class NewsController extends GetxController {
   bool isLoadingIndonesianArticle = true;
   String? errorMessageIndonesianArticle;
 
+  List<ArticleModel> listSearchArticle = [];
+  bool isLoadingSearchArticle = false;
+  String? errorMessageSearchArticle;
+
   @override
   void onInit() {
     super.onInit();
-
     getInternationalArticle();
     getBusinessArticle();
     getIndonesianArticle();
@@ -69,6 +72,30 @@ class NewsController extends GetxController {
       update();
     } finally {
       isLoadingIndonesianArticle = false;
+      update();
+    }
+  }
+
+  void resetSearchValue() {
+    listSearchArticle = [];
+    update();
+  }
+
+  void getSearchArticle(String query) async {
+    try {
+      isLoadingSearchArticle = true;
+      update();
+
+      listSearchArticle =
+          await NewsServices.searchNews(query).catchError((onError) {
+        errorMessageSearchArticle = (onError as ExceptionModel).message;
+      });
+      if (listSearchArticle.isEmpty) {
+        errorMessageSearchArticle = "pencarian $query tidak ditemukan";
+      }
+      update();
+    } finally {
+      isLoadingSearchArticle = false;
       update();
     }
   }

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:news_app/components/card_business_article.dart';
 import 'package:news_app/components/card_international_article.dart';
 import 'package:news_app/controllers/news_controller.dart';
+import 'package:news_app/pages/search_page.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
@@ -26,7 +27,11 @@ class HomePage extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () => showGeneralDialog(
+                context: context,
+                pageBuilder: (ctx, animation, secondAnimation) {
+                  return SearchPage();
+                }),
             icon: Icon(
               Icons.search_rounded,
               color: theme.indicatorColor,

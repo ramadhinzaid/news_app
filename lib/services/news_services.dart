@@ -37,13 +37,23 @@ class NewsServices {
     }
   }
 
-  static Future<List<ArticleModel>?> searchNews(String query) async {
+  static Future<List<ArticleModel>> searchNews(String query) async {
     try {
-      http
-          .get(API.apiMobileUser("everything?q=$query"))
+      Response response = await http
+          .get(API.apiMobileUser("everything?q=$query"),
+              headers: API.headerValue)
           .timeout(const Duration(seconds: 10));
-
-      return [];
+      var data = jsonDecode(response.body);
+      if (response.statusCode == 200 &&
+          data["status"] == "ok" &&
+          data["articles"] != null) {
+        return data["articles"]
+            .cast<Map<String, dynamic>>()
+            .map<ArticleModel>((json) => ArticleModel.fromJson(json))
+            .toList();
+      } else {
+        throw data["message"];
+      }
     } on TimeoutException catch (_) {
       throw ExceptionModel(timeoutmsg);
     } on SocketException catch (_) {

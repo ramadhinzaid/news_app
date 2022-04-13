@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:news_app/models/article_model.dart';
 import 'package:news_app/routes/route_name.dart';
 
+import 'image_handler.dart';
+
 class CardBusinessArticle extends StatelessWidget {
   final ArticleModel businessArticle;
   const CardBusinessArticle({Key? key, required this.businessArticle})
@@ -28,7 +30,7 @@ class CardBusinessArticle extends StatelessWidget {
                 aspectRatio: 100 / 100,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
-                  child: Image.network(
+                  child: NewsImage.network(
                     businessArticle.urlToImage ?? "",
                     fit: BoxFit.cover,
                   ),
@@ -45,6 +47,8 @@ class CardBusinessArticle extends StatelessWidget {
                   Text(
                     businessArticle.author ?? "No Author",
                     style: textTheme.bodyText2,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
                   Text(
                     businessArticle.title ?? "",
