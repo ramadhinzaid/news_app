@@ -31,7 +31,11 @@ class CardInternationalArticle extends StatelessWidget {
               child: Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.3),
+                    // color: Colors.black.withOpacity(0.3),
+                    gradient: LinearGradient(colors: [
+                      Colors.black,
+                      Colors.grey.withOpacity(0.2),
+                    ], begin: Alignment.bottomCenter, end: Alignment.topCenter),
                     borderRadius: const BorderRadius.only(
                         bottomLeft: Radius.circular(16),
                         bottomRight: Radius.circular(16))),

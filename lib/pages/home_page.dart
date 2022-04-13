@@ -147,7 +147,7 @@ class HomePage extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16),
             sliver: GetBuilder<NewsController>(builder: (news) {
               if (news.isLoadingIndonesianArticle) {
-                return SliverToBoxAdapter(
+                return const SliverFillRemaining(
                   child: Center(
                     child: CircularProgressIndicator(),
                   ),
