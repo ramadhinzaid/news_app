@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:news_app/components/card_business_article.dart';
 import 'package:news_app/components/card_international_article.dart';
 import 'package:news_app/controllers/news_controller.dart';
 
@@ -113,24 +114,26 @@ class HomePage extends StatelessWidget {
                       style: textTheme.headline6,
                     ),
                   ),
-                  Expanded(
-                      child: ListView.separated(
-                          separatorBuilder: (context, index) => const Padding(
-                                padding: EdgeInsets.only(right: 8.0),
-                              ),
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          scrollDirection: Axis.horizontal,
-                          itemCount: 30,
-                          itemBuilder: (ct, id) => Card(
-                                child: Container(
-                                  width: 100,
-                                  color: Colors.red,
-                                  child: const Text("O"),
-                                ),
-                              ))),
+                  Expanded(child: GetBuilder<NewsController>(builder: (news) {
+                    if (news.isLoadingBusinessArticle) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    return ListView.separated(
+                        physics: const BouncingScrollPhysics(),
+                        separatorBuilder: (context, index) => const Padding(
+                              padding: EdgeInsets.only(right: 8.0),
+                            ),
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        scrollDirection: Axis.horizontal,
+                        itemCount: news.listBusinessArticle.length,
+                        itemBuilder: (ct, id) => CardBusinessArticle(
+                            businessArticle: news.listBusinessArticle[id]));
+                  })),
                   Padding(
-                    padding:
-                        const EdgeInsets.only(left: 16, right: 16, top: 16),
+                    padding: const EdgeInsets.only(
+                        left: 16, right: 16, top: 16, bottom: 8),
                     child: Text(
                       "Top In Indonesia",
                       style: textTheme.headline6,
@@ -140,20 +143,32 @@ class HomePage extends StatelessWidget {
               ),
             ),
           ),
-          SliverList(
-              delegate: SliverChildBuilderDelegate(
-            (ct, id) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Card(
-                  child: Container(
-                    height: 50,
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            sliver: GetBuilder<NewsController>(builder: (news) {
+              if (news.isLoadingIndonesianArticle) {
+                return SliverToBoxAdapter(
+                  child: Center(
+                    child: CircularProgressIndicator(),
                   ),
-                ),
-              );
-            },
-            childCount: 20,
-          ))
+                );
+              }
+              return SliverGrid(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 16,
+                    crossAxisSpacing: 16,
+                    childAspectRatio: 180 / 230,
+                  ),
+                  delegate: SliverChildBuilderDelegate(
+                    (ct, id) {
+                      return CardInternationalArticle(
+                          article: news.listIndonesianArticle[id]);
+                    },
+                    childCount: news.listIndonesianArticle.length,
+                  ));
+            }),
+          )
         ],
       ),
     );
