@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class ArticleModel {
   ArticleModel({
     this.source,
@@ -16,7 +18,7 @@ class ArticleModel {
   String? description;
   String? url;
   String? urlToImage;
-  DateTime? publishedAt;
+  String? publishedAt;
   String? content;
 
   factory ArticleModel.fromJson(Map<String, dynamic> json) => ArticleModel(
@@ -26,7 +28,8 @@ class ArticleModel {
         description: json["description"],
         url: json["url"],
         urlToImage: json["urlToImage"],
-        publishedAt: DateTime.parse(json["publishedAt"]),
+        publishedAt: DateFormat("dd MMM yyyy")
+            .format(DateTime.parse(json["publishedAt"])),
         content: json["content"],
       );
 
@@ -37,7 +40,7 @@ class ArticleModel {
         "description": description,
         "url": url,
         "urlToImage": urlToImage,
-        "publishedAt": publishedAt?.toIso8601String(),
+        "publishedAt": publishedAt,
         "content": content,
       };
 }
